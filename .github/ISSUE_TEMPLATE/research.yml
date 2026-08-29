@@ -1,0 +1,29 @@
+name: Research proposal
+description: Propose a traceable scientific-computing research activity.
+title: "research: "
+labels: [research]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Bounded question
+    validations:
+      required: true
+  - type: textarea
+    id: contexts
+    attributes:
+      label: Contexts, interfaces, and overlaps
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Verification and evidence plan
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Data, model, and license provenance
+    validations:
+      required: true
