@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Organization support
+    url: https://github.com/AI4SciComp/.github/blob/main/SUPPORT.md
+    about: Choose the correct repository and support channel.
+  - name: Security guidance
+    url: https://github.com/AI4SciComp/.github/blob/main/SECURITY.md
+    about: Report vulnerabilities privately.

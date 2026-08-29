@@ -1,0 +1,30 @@
+name: Feature proposal
+description: Propose a bounded organization or repository capability.
+title: "feature: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: dropdown
+    id: plane
+    attributes:
+      label: Plane
+      options: [research, scientific-computing, engineering]
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Repository ownership and dependency impact
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Acceptance evidence
+    validations:
+      required: true
