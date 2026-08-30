@@ -12,12 +12,15 @@ and linked to their sources and decisions.
   decisions, lifecycle records, deterministic restriction and gluing, a CLI,
   and local stdio MCP.
 - **Scientific computing:**
-  [asc-cpp](https://github.com/AI4SciComp/asc-cpp) and
-  [asc-py](https://github.com/AI4SciComp/asc-py) are domain-neutral
-  foundations. Private `asc-xde`, `asc-kinetic`, and `asc-lean` repositories
-  are current incubation skeletons, not released implementations. `asc-no` is
-  planned for future neural-operator models, training, evaluation, and
-  benchmarks built on released `asc-py` APIs; it is not implemented.
+  [asc-py](https://github.com/AI4SciComp/asc-py) is the domain-neutral Python
+  foundation for sibling `asc-xde` and `asc-no` libraries. Private `asc-xde`
+  incubates equations, discretizations, solvers, diagnostics, simulation, and
+  PDE dataset generation. Private `asc-no` incubates neural-operator models,
+  training, evaluation, checkpoints, and benchmarks. Both use only released
+  public `asc-py` APIs; ASC XDE passes versioned dataset artifacts to ASC NO
+  without a runtime dependency between them. `asc-cpp` remains an independent
+  C++ performance foundation for standalone components and future profiled,
+  task-specific native providers.
 - **Engineering:** [asc-cmake](https://github.com/AI4SciComp/asc-cmake) owns
   CMake build policy, while
   [asc-devtools](https://github.com/AI4SciComp/asc-devtools) remains a

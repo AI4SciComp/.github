@@ -27,7 +27,14 @@ _HISTORICAL_ONLY = {
     "asc-" + "lab",
 }
 _STATUSES = {"active", "planned", "archived"}
-_MATURITIES = {"governance", "foundation", "implemented", "skeleton", "planned"}
+_MATURITIES = {
+    "governance",
+    "foundation",
+    "implemented",
+    "incubating",
+    "skeleton",
+    "planned",
+}
 _VISIBILITIES = {"public", "private", "not-created"}
 _PLANES = {"research", "scientific-computing", "engineering"}
 _REQUIRED_FIELDS = {
@@ -143,16 +150,34 @@ def validate_repository(root: Path) -> tuple[str, ...]:
             errors.append(f"{name}: self build-dependency")
 
     indexed = {cast(str, entry["name"]): entry for entry in entries}
-    planned = {name for name, entry in indexed.items() if entry["status"] == "planned"}
-    if planned != {"asc-no"}:
-        errors.append(f"only asc-no may be planned, found {sorted(planned)}")
+    planned = [name for name, entry in indexed.items() if entry["status"] == "planned"]
+    if planned:
+        errors.append(f"no audited repository may remain planned, found {sorted(planned)}")
     neural = indexed.get("asc-no", {})
-    if neural.get("visibility") != "not-created":
-        errors.append("asc-no must remain explicitly not-created")
+    if neural.get("status") == "planned":
+        if neural.get("visibility") != "not-created":
+            errors.append("planned asc-no must be explicitly not-created")
+        if neural.get("maturity") != "planned":
+            errors.append("planned asc-no must have planned maturity")
+    elif neural.get("visibility") != "private":
+        errors.append("incubating asc-no must initially be private")
     if neural.get("public_dependencies") != ["asc-py"]:
         errors.append("asc-no must depend only on released asc-py at repository level")
     if "asc-os-runtime" not in neural.get("must_not_depend_on", []):
         errors.append("asc-no must prohibit an asc-os runtime dependency")
+    if not {"asc-cpp", "asc-xde", "asc-py-private"}.issubset(
+        set(neural.get("must_not_depend_on", []))
+    ):
+        errors.append("asc-no sibling/private/native dependency prohibition missing")
+    equations = indexed.get("asc-xde", {})
+    if equations.get("public_dependencies") != ["asc-py"]:
+        errors.append("asc-xde must depend only on released asc-py")
+    if equations.get("languages") != ["Python"]:
+        errors.append("asc-xde must declare Python as its implementation language")
+    if not {"asc-cpp", "asc-no", "asc-py-private", "asc-os-runtime"}.issubset(
+        set(equations.get("must_not_depend_on", []))
+    ):
+        errors.append("asc-xde sibling/private/native dependency prohibition missing")
     research = indexed.get("asc-os", {})
     if research.get("public_dependencies") or research.get("build_dependencies"):
         errors.append("asc-os must have no repository runtime/build dependencies")
@@ -187,8 +212,8 @@ def validate_repository(root: Path) -> tuple[str, ...]:
         if name not in history:
             errors.append(f"historical migration evidence missing for {name}")
     profile = (root / "profile" / "README.md").read_text(encoding="utf-8")
-    if "`asc-no` is\n  planned" not in profile:
-        errors.append("organization profile must label asc-no as planned")
+    if "Private `asc-no` incubates" not in profile:
+        errors.append("organization profile must label private asc-no as incubating")
     return tuple(sorted(errors))
 
 
