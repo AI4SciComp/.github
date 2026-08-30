@@ -33,7 +33,7 @@
       "maturity": "foundation",
       "visibility": "public",
       "plane": "scientific-computing",
-      "role": "Domain-neutral C++20 scientific-computing foundation.",
+      "role": "Independent C++20 scientific-computing and performance foundation for standalone components and future optional task-specific native providers.",
       "languages": ["C++"],
       "public_dependencies": [],
       "build_dependencies": ["asc-cmake"],
@@ -81,16 +81,16 @@
     },
     {
       "name": "asc-no",
-      "status": "planned",
-      "maturity": "planned",
-      "visibility": "not-created",
+      "status": "active",
+      "maturity": "incubating",
+      "visibility": "private",
       "plane": "scientific-computing",
-      "role": "Neural-operator models, training, evaluation, and benchmarks built on asc-py.",
+      "role": "Neural-operator models, training, evaluation, inference, safe checkpoints, and benchmarks built on released public asc-py and consuming versioned PDE artifacts without an asc-xde runtime dependency.",
       "languages": ["Python"],
       "public_dependencies": ["asc-py"],
       "build_dependencies": [],
       "research_sidecar": "asc-os",
-      "must_not_depend_on": ["asc-cpp-private", "asc-py-private", "asc-os-runtime"]
+      "must_not_depend_on": ["asc-cpp", "asc-xde", "asc-py-private", "asc-os-runtime"]
     },
     {
       "name": "asc-os",
@@ -121,15 +121,15 @@
     {
       "name": "asc-xde",
       "status": "active",
-      "maturity": "skeleton",
+      "maturity": "incubating",
       "visibility": "private",
       "plane": "scientific-computing",
-      "role": "Incubation skeleton for a future equations, discretization, and solver layer.",
-      "languages": [],
-      "public_dependencies": [],
+      "role": "Python differential-equation modeling, discretization, solver, diagnostics, simulation, and versioned PDE dataset-generation library built on released public asc-py.",
+      "languages": ["Python"],
+      "public_dependencies": ["asc-py"],
       "build_dependencies": [],
       "research_sidecar": "asc-os",
-      "must_not_depend_on": ["asc-os", "asc-no"]
+      "must_not_depend_on": ["asc-cpp", "asc-no", "asc-py-private", "asc-os-runtime"]
     }
   ]
 }

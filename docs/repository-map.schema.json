@@ -33,7 +33,7 @@
       "properties": {
         "name": {"type": "string", "pattern": "^(\\.github|asc-[a-z0-9-]+)$"},
         "status": {"enum": ["active", "planned", "archived"]},
-        "maturity": {"enum": ["governance", "foundation", "implemented", "skeleton", "planned"]},
+        "maturity": {"enum": ["governance", "foundation", "implemented", "incubating", "skeleton", "planned"]},
         "visibility": {"enum": ["public", "private", "not-created"]},
         "plane": {"enum": ["research", "scientific-computing", "engineering"]},
         "role": {"type": "string", "minLength": 1},
